@@ -45,14 +45,10 @@ public class UsersController {
 	//login rest api
 	@PostMapping("/login")
 	@ResponseBody
-	public ResponseEntity<String> LoginUser(@RequestParam("email") String email, @RequestParam("password") String password,
-			Model modelMap, HttpSession hs) {
+	public ResponseEntity<String> LoginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
 		System.out.println("processing " + email + " " + password);
 		
 		try {  Users user = userLogin.AuthenticationUser(email, password);
-
-			hs.setAttribute("user_details", email);
-			hs.setAttribute("message", user.getRole() + " , " + user.getUsername() + " Logged inm successfully....");
 
 			if (user.getRole() == 1)
 				return   ResponseEntity.ok("admin");
@@ -61,7 +57,6 @@ public class UsersController {
 
 		} catch (RuntimeException e) {
 			System.out.println("Error in Controller " + e);
-			modelMap.addAttribute("message", "Invalid Login, Please retry!!!!");
 			return   ResponseEntity.badRequest().body("wrong email pass");
 		}
 

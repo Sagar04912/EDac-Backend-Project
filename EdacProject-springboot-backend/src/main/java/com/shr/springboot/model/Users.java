@@ -40,11 +40,11 @@ public class Users {
 	@Column(name="role")
 	private int role;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "users_courses",
-				joinColumns = @JoinColumn(name = "user_id"),
-				inverseJoinColumns = @JoinColumn(name = "course_id"))
-	private List<Courses> userCourse = new ArrayList<>();
+//	@ManyToMany(fetch = FetchType.LAZY)
+//	@JoinTable(name = "users_courses",
+//				joinColumns = @JoinColumn(name = "user_id"),
+//				inverseJoinColumns = @JoinColumn(name = "course_id"))
+//	private List<Courses> userCourse = new ArrayList<>();
 
 
 	public Users() {
@@ -53,15 +53,15 @@ public class Users {
 	}
 
 
-	public Users(long id, @NotBlank String username, @NotBlank String email, @NotBlank String password, int role,
-			List<Courses> userCourse) {
+	public Users(long id, @NotBlank String username, @NotBlank String email, @NotBlank String password, int role
+			) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.role = role;
-		this.userCourse = userCourse;
+		//this.userCourse = userCourse;
 	}
 
 
@@ -114,16 +114,16 @@ public class Users {
 		this.role = role;
 	}
 
-
-	public List<Courses> getUserCourse() {
-		return userCourse;
-	}
-
-
-	public void setUserCourse(List<Courses> userCourse) {
-		this.userCourse = userCourse;
-	}
-
+//
+//	public List<Courses> getUserCourse() {
+//		return userCourse;
+//	}
+//
+//
+//	public void setUserCourse(List<Courses> userCourse) {
+//		this.userCourse = userCourse;
+//	}
+//
 
 
 	
