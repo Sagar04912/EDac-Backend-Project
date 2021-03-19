@@ -1,19 +1,25 @@
 
 package com.shr.springboot.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shr.springboot.model.Courses;
 import com.shr.springboot.model.Users;
 import com.shr.springboot.repository.UsersRepository;
 import com.shr.springboot.service.UserService;
@@ -63,7 +69,21 @@ public class UsersController {
 		return   ResponseEntity.badRequest().body("wrong email pass");
 	}
 	
+	//add to cart
+	@PutMapping("/addtocart")
+	public Users addToCart(@RequestBody Users user)
+	{
+			return userRepository.save(user);
+			//return ResponseEntity.ok().body("User Courses Added Successfully");	
+		//return ResponseEntity.badRequest().body("User Not found");
+	}
 	
-	
+
+	//display all user courses
+	@GetMapping("/userAllCourses")
+	public Optional<Users> userCourses(@RequestParam("id") long userId) {
+		return userLogin.getAllUserCourses(userId);
+	}
+	 
 	
 }

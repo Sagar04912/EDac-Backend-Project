@@ -28,7 +28,7 @@ public class Users {
 	private String username;
 	
 		
-	@Column(name="email_id")
+	@Column(name="email_id", unique = true)
 	@NotBlank
 	private String email;
 	
@@ -40,11 +40,11 @@ public class Users {
 	@Column(name="role")
 	private int role;
 	
-//	@ManyToMany(fetch = FetchType.LAZY)
-//	@JoinTable(name = "users_courses",
-//				joinColumns = @JoinColumn(name = "user_id"),
-//				inverseJoinColumns = @JoinColumn(name = "course_id"))
-//	private List<Courses> userCourse = new ArrayList<>();
+	@ManyToMany
+	@JoinTable(name = "users_courses",
+				joinColumns = @JoinColumn(name = "user_id"),
+				inverseJoinColumns = @JoinColumn(name = "course_id"))
+	private List<Courses> userCourse = new ArrayList<>();
 
 
 	public Users() {
@@ -52,17 +52,18 @@ public class Users {
 		// TODO Auto-generated constructor stub
 	}
 
-
-	public Users(long id, @NotBlank String username, @NotBlank String email, @NotBlank String password, int role
-			) {
+	public Users(long id, @NotBlank String username, @NotBlank String email, @NotBlank String password, int role,
+			List<Courses> userCourse) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.role = role;
-		//this.userCourse = userCourse;
+		this.userCourse = userCourse;
 	}
+
+
 
 
 	public long getId() {
@@ -114,16 +115,16 @@ public class Users {
 		this.role = role;
 	}
 
-//
-//	public List<Courses> getUserCourse() {
-//		return userCourse;
-//	}
-//
-//
-//	public void setUserCourse(List<Courses> userCourse) {
-//		this.userCourse = userCourse;
-//	}
-//
+
+	public List<Courses> getUserCourse() {
+		return userCourse;
+	}
+
+
+	public void setUserCourse(List<Courses> userCourse) {
+		this.userCourse = userCourse;
+	}
+
 
 
 	
