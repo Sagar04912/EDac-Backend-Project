@@ -1,7 +1,6 @@
 package com.shr.springboot.service;
 
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class UserServiceImpl implements UserService {
 		return userLogin.findUsersByEmailAndPassword(email, password);
 	}
 
-
+	
 
 //	@Override
 //	public Users Addtocart(Users user) {
@@ -38,6 +37,14 @@ public class UserServiceImpl implements UserService {
 	public Optional<Users> getAllUserCourses(long id) {
 		// TODO Auto-generated method stub
 		return userLogin.fetchUserCoursesByUserId(id);
+	}
+
+
+
+	@Override
+	public int getUserIdByEmail(String email) {
+		
+		return userLogin.findUserIdbyEmail(email);
 	}
 
 	

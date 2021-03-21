@@ -3,9 +3,9 @@ package com.shr.springboot.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name="Users")
+@Table(name="Users" )
 public class Users {
 	
 	@Id
@@ -40,10 +40,10 @@ public class Users {
 	@Column(name="role")
 	private int role;
 	
-	@ManyToMany
-	@JoinTable(name = "users_courses",
+	@ManyToMany(cascade = CascadeType.DETACH )
+	@JoinTable(name = "userCourse",
 				joinColumns = @JoinColumn(name = "user_id"),
-				inverseJoinColumns = @JoinColumn(name = "course_id"))
+	inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Courses> userCourse = new ArrayList<>();
 
 
@@ -51,6 +51,9 @@ public class Users {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
 
 	public Users(long id, @NotBlank String username, @NotBlank String email, @NotBlank String password, int role,
 			List<Courses> userCourse) {
@@ -116,16 +119,24 @@ public class Users {
 	}
 
 
+
+
 	public List<Courses> getUserCourse() {
 		return userCourse;
 	}
+
+
 
 
 	public void setUserCourse(List<Courses> userCourse) {
 		this.userCourse = userCourse;
 	}
 
-
+	
 
 	
+
+	
+
+
 }

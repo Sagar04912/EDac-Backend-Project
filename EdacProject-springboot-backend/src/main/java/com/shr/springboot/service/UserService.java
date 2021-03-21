@@ -1,6 +1,5 @@
 package com.shr.springboot.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -13,4 +12,6 @@ public interface UserService {
 	// Users Addtocart(Users user);
 	
 	 Optional<Users> getAllUserCourses(long id);
+	 
+	 public int getUserIdByEmail(String email);
 }

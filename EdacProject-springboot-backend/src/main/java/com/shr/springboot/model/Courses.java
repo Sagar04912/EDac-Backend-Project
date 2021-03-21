@@ -56,6 +56,7 @@ public class Courses {
 	@Column(name = "author")
 	private String author;
 	
+	
 	public Courses() {
 		// TODO Auto-generated constructor stub
 	}
