@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,33 +41,34 @@ public class Users {
 	@Column(name="role")
 	private int role;
 	
-	@ManyToMany(cascade = CascadeType.DETACH )
-	@JoinTable(name = "userCourse",
-				joinColumns = @JoinColumn(name = "user_id"),
-	inverseJoinColumns = @JoinColumn(name = "course_id"))
-	private List<Courses> userCourse = new ArrayList<>();
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "userCart",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "course_id"))
+	private List<Courses> userCart = new ArrayList<>();
 
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "userCourse",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "course_id"))
+	private List<Courses> userCourse = new ArrayList<>();
 
 	public Users() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-
-
 	public Users(long id, @NotBlank String username, @NotBlank String email, @NotBlank String password, int role,
-			List<Courses> userCourse) {
+			List<Courses> userCart, List<Courses> userCourse ) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.role = role;
+		this.userCart = userCart;
 		this.userCourse = userCourse;
 	}
-
-
 
 
 	public long getId() {
@@ -118,25 +120,20 @@ public class Users {
 		this.role = role;
 	}
 
-
-
-
 	public List<Courses> getUserCourse() {
 		return userCourse;
 	}
-
-
-
 
 	public void setUserCourse(List<Courses> userCourse) {
 		this.userCourse = userCourse;
 	}
 
-	
+	public List<Courses> getUserCart() {
+		return userCart;
+	}
 
-	
-
-	
-
+	public void setUserCart(List<Courses> userCart) {
+		this.userCart = userCart;
+	}
 
 }

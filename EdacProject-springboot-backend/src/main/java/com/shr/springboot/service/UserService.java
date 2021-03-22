@@ -13,5 +13,7 @@ public interface UserService {
 	
 	 Optional<Users> getAllUserCourses(long id);
 	 
+	 Optional<Users> getUserCartCourses(long id);
+	 
 	 public int getUserIdByEmail(String email);
 }

@@ -47,6 +47,14 @@ public class UserServiceImpl implements UserService {
 		return userLogin.findUserIdbyEmail(email);
 	}
 
+
+
+	@Override
+	public Optional<Users> getUserCartCourses(long id) {
+		
+		return userLogin.UserCartByUserId(id);
+	}
+
 	
 
 //	@Override

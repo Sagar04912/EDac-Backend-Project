@@ -13,14 +13,13 @@ import com.shr.springboot.model.Users;
 public interface UsersRepository extends JpaRepository<Users, Long>{ 
 	
 	public Users findUsersByEmailAndPassword(String email, String password);
-//	
-//	@Query("insert into u (id,courseId)(select u.id, from Users u )")
-//	public Users addToCart(long id, long coursId);
-	//(select u.id, c.course_id from users u cross join courses c where u.id=1 and c.course_id=3);
-	
+
 	
 	@Query("select u from Users u inner join fetch u.userCourse where u.id=:id")
 	Optional<Users> fetchUserCoursesByUserId(@Param("id")long id);
+	
+	@Query("select u from Users u inner join fetch u.userCart where u.id=:id")
+	Optional<Users> UserCartByUserId(@Param("id")long id);
 	
 	@Query("select u.id from Users u where u.email= :email")
 	public int findUserIdbyEmail(@Param("email") String email);
