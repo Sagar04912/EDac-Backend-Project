@@ -12,21 +12,25 @@ import javax.persistence.Table;
 public class UserCourse  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long uId;
+	private long uId;	// User Course ID // primary key
 	@Column(name = "user_id")
-	private long id;
+	private long id;	//User ID // foreign key
 	@Column(name = "course_id")
-	private long courseId;
+	private long courseId;	//Course ID	// foreign key
 	
 	public UserCourse() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserCourse(long id, long courseId) {
+	
+	public UserCourse(long uId, long id, long courseId) {
 		super();
+		this.uId = uId;
 		this.id = id;
 		this.courseId = courseId;
+		
 	}
+
 
 	public long getId() {
 		return id;
@@ -43,6 +47,6 @@ public class UserCourse  {
 	public void setCourseId(long courseId) {
 		this.courseId = courseId;
 	}
-	
+
 	
 }

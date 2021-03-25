@@ -13,11 +13,11 @@ public class UserCart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "usercart_id")
-	private long userCartId;
+	private long userCartId;	//User Cart ID 	//Primary Key
 	@Column(name = "user_id", nullable = false)
-	private long id;
+	private long id;	//User ID // foreign key
 	@Column(name = "course_id", nullable = false)
-	private long courseId;
+	private long courseId;	//Course ID	// foreign key
 	
 	public UserCart() {
 		// TODO Auto-generated constructor stub

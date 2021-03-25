@@ -18,10 +18,10 @@ public interface UserCoursesRepository extends JpaRepository<UserCourse, Long> {
 	@Modifying
 	@Query(value = "insert into user_course (user_id,course_id) values (:id,:courseId)" , nativeQuery = true)
 	@Transactional
-	public void addToCart(@Param("id") long id, @Param("courseId") long courseId);
+	public void addToCart(@Param("id") long id, @Param("courseId") long courseId);	// Inserting Data into User Courses using UserId and CourseId   
 	
 	@Query(value = "select * from user_course where user_id=:id and course_id=:courseId " , nativeQuery = true)
 	@Transactional
-	public Optional<UserCourse> checkIfExists(@Param("id") long id, @Param("courseId") long courseId);
+	public Optional<UserCourse> checkIfExists(@Param("id") long id, @Param("courseId") long courseId);	// selecting the user courses using usersId and CourseId
 	
 }

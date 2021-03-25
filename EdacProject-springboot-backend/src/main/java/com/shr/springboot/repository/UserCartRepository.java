@@ -18,17 +18,17 @@ public interface UserCartRepository extends JpaRepository<UserCart, Long>{
 	@Modifying
 	@Query(value = "insert into user_cart (user_id,course_id) values (:id,:courseId)" , nativeQuery = true)
 	@Transactional
-	public void addToCart(@Param("id") long id, @Param("courseId") long courseId);
+	public void addToCart(@Param("id") long id, @Param("courseId") long courseId);	// Inserting Data into User Cart using UserId and CourseId   
 	
 	
 	@Query(value = "select * from user_cart where user_id=:id and course_id=:courseId " , nativeQuery = true)
 	@Transactional
-	public Optional<UserCart> checkIfExists(@Param("id") long id, @Param("courseId") long courseId);
+	public Optional<UserCart> checkIfExists(@Param("id") long id, @Param("courseId") long courseId);	// selecting the user Cart using usersId and CourseId
 	
 	@Modifying
 	@Query(value = "delete from user_cart where user_id=:id and course_id=:courseId", nativeQuery = true)
 	@Transactional
-	public void deleteFromCart(@Param("id") long id, @Param("courseId") long courseId);
+	public void deleteFromCart(@Param("id") long id, @Param("courseId") long courseId);		// Deleting course from user cart using userID and courseId
 	
 
 }

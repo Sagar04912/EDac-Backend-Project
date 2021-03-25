@@ -16,47 +16,53 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name="Users" )
 public class Users {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long id;//User ID // Primary Key
 	
 	@Column(name="user_name")
 	@NotBlank
-	private String username;
+	private String username;//User Name
 	
 		
 	@Column(name="email_id", unique = true)
 	@NotBlank
-	private String email;
+	private String email;//User Email Address
 	
 	@Column(name="password")
 	@NotBlank
-	private String password;
+	private String password;//User Password
 	
 	
 	@Column(name="role")
-	private int role;
+	private int role;//User Role : Admin = 1, User = 0
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "userCart",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "course_id"))
+	@ManyToMany(fetch = FetchType.EAGER)//
+	@JoinTable(name = "userCart",// Table Name : user_cart
+			joinColumns = @JoinColumn(name = "user_id"),//foreign  References User_id
+			inverseJoinColumns = @JoinColumn(name = "course_id"))//foreign  References Course_id
 	private List<Courses> userCart = new ArrayList<>();
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "userCourse",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "course_id"))
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "userCourse",//Table Name : user_course
+			joinColumns = @JoinColumn(name = "user_id"),//foreign  References User_id
+			inverseJoinColumns = @JoinColumn(name = "course_id"))//foreign  References Course_id
 	private List<Courses> userCourse = new ArrayList<>();
+	
 
 	public Users() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	
 	public Users(long id, @NotBlank String username, @NotBlank String email, @NotBlank String password, int role,
 			List<Courses> userCart, List<Courses> userCourse ) {
@@ -70,7 +76,7 @@ public class Users {
 		this.userCourse = userCourse;
 	}
 
-
+	//getters and setters
 	public long getId() {
 		return id;
 	}
