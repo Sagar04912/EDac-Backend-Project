@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shr.springboot.model.UserCart;
 import com.shr.springboot.model.Users;
-import com.shr.springboot.repository.UserCartRepository;
-import com.shr.springboot.service.UserService;
+import com.shr.springboot.service.UserCartService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -22,22 +21,19 @@ import com.shr.springboot.service.UserService;
 public class UserCartController {
 
 	@Autowired
-	private UserService userLogin;
-
-	@Autowired
-	private UserCartRepository userCart;
+	private UserCartService userCartService;
 
 	// Courses : add to cart
 	@PostMapping("/addtocart")
 	@ResponseBody
 	public ResponseEntity<String> addToCart(@RequestParam("id") long id, @RequestParam("cid") long courseId) {
 
-		Optional<UserCart> userCourses = userCart.checkIfExists(id, courseId);	// Show All User_Courses using User ID and Course ID
+		Optional<UserCart> userCourses = userCartService.checkCourseIfExist(id, courseId);	// Show All User_Courses using User ID and Course ID
 
 		if (userCourses.isPresent()) {				// Check if the Course exist in User Courses or not
 			return ResponseEntity.badRequest().body("Course already exists");
 		} else {
-			userCart.addToCart(id, courseId);
+			userCartService.addToUserCart(id, courseId);
 			return ResponseEntity.ok("User's Course added successfully");
 		}
 
@@ -47,16 +43,16 @@ public class UserCartController {
 	@PostMapping("/getuserid")
 	@ResponseBody
 	public int getUserId(@RequestParam("email") String email) {
-		return userLogin.getUserIdByEmail(email);
+		return userCartService.getUserIdByEmail(email);
 	}
 
 	// delete from cart
 	@PostMapping("/deletefromcart")
 	@ResponseBody
 	public ResponseEntity<String> deleteFromCarts(@RequestParam("id") long id, @RequestParam("cid") long courseId) {
-		Optional<UserCart> userCourses = userCart.checkIfExists(id, courseId);	
+		Optional<UserCart> userCourses = userCartService.checkCourseIfExist(id, courseId);	
 		if (userCourses.isPresent()) {
-			userCart.deleteFromCart(id, courseId);		
+			userCartService.deleteFromCart(id, courseId);		
 			return ResponseEntity.ok("User's Course deleted successfully");
 		} else {
 			return ResponseEntity.badRequest().body("Invalid Id's");
@@ -68,6 +64,6 @@ public class UserCartController {
 	@PostMapping("/displaycartcourses")
 	@ResponseBody
 	public Optional<Users> userCartCourses(@RequestParam("id") long userId) {
-		return userLogin.getUserCartCourses(userId);
+		return userCartService.getUserCartCourses(userId);
 	}
 }

@@ -20,7 +20,6 @@ public interface UserCartRepository extends JpaRepository<UserCart, Long>{
 	@Transactional
 	public void addToCart(@Param("id") long id, @Param("courseId") long courseId);	// Inserting Data into User Cart using UserId and CourseId   
 	
-	
 	@Query(value = "select * from user_cart where user_id=:id and course_id=:courseId " , nativeQuery = true)
 	@Transactional
 	public Optional<UserCart> checkIfExists(@Param("id") long id, @Param("courseId") long courseId);	// selecting the user Cart using usersId and CourseId

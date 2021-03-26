@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shr.springboot.model.Users;
-import com.shr.springboot.repository.UsersRepository;
 import com.shr.springboot.service.UserService;
 
 @CrossOrigin(origins= "http://localhost:3000")
@@ -21,14 +20,11 @@ import com.shr.springboot.service.UserService;
 public class UsersController {
 	
 	@Autowired
-	private UsersRepository userRepository;
-	
-	@Autowired
-	private UserService userLogin;
+	private UserService userService;
 	
 	@PostMapping("/registration")
 	public Users createUser(@RequestBody Users user) {
-		return userRepository.save(user);
+		return userService.createUser(user);
 	}
 	
 	//login rest api
@@ -37,7 +33,7 @@ public class UsersController {
 	public ResponseEntity<String> LoginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
 		System.out.println("processing " + email + " " + password);
 		
-		try {  Users user = userLogin.AuthenticationUser(email, password);
+		try {  Users user = userService.AuthenticationUser(email, password);
 
 			if (user.getRole() == 1)
 				return   ResponseEntity.ok("admin");

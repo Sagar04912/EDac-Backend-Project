@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shr.springboot.model.UserCourse;
 import com.shr.springboot.model.Users;
-import com.shr.springboot.repository.UserCartRepository;
-import com.shr.springboot.repository.UserCoursesRepository;
-import com.shr.springboot.service.UserService;
+import com.shr.springboot.service.UserCartService;
+import com.shr.springboot.service.UserCoursesService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -25,26 +24,24 @@ import com.shr.springboot.service.UserService;
 public class UserCoursesController {
 	
 	@Autowired	
-	private UserService userLogin;
+	private UserCoursesService userCourseService;
 	
-	@Autowired
-	private UserCoursesRepository userCourse;
+	@Autowired	
+	private UserCartService userCartService;
 	
-	@Autowired
-	private UserCartRepository userCart;
 
 	//Courses : add to User Account
 	@PostMapping("/checkout")
 	@ResponseBody
 	public ResponseEntity<String> addToUsersAccount(@RequestParam("id") long id, @RequestParam("cid") long courseId) {
 		
-		Optional<UserCourse> userCarts = userCourse.checkIfExists(id, courseId);	// Show All User_Courses using User ID and Course ID
+		Optional<UserCourse> userCarts = userCourseService.checkCourseIfExist(id, courseId);	// Show All User_Courses using User ID and Course ID
 
 		if (userCarts.isPresent()) {				// Check if the Course exist in User Courses or not
 			return ResponseEntity.badRequest().body("Course already exists");
 		} else {
-			userCourse.addToCart(id, courseId);
-			userCart.deleteFromCart(id, courseId);
+			userCourseService.addToUserCourse(id, courseId);
+			userCartService.deleteFromCart(id, courseId);
 			return ResponseEntity.ok("User's Course added successfully");
 		}
 	
@@ -53,9 +50,9 @@ public class UserCoursesController {
 	//display all user courses
 		@PostMapping("/userAllCourses")
 		@ResponseBody
-		@Transactional
+		
 		public Optional<Users> userCourses(@RequestParam("id") long userId) {
-			return userLogin.getAllUserCourses(userId);
+			return userCourseService.getAllUserCourses(userId);
 		}
 	
 }

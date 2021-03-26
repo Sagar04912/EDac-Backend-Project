@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shr.springboot.custom_exceptions.UsersHandlingException;
@@ -47,7 +48,8 @@ public class CourseController {
 	}
 	
 	// Delete Courses
-	@DeleteMapping("/courses")
+	@PostMapping("/courses/delete")
+	@ResponseBody
 	public ResponseEntity<String> deleteCourse(@RequestBody Long courseId){
 		try {
 				courseService.deleteCourse(courseId);
